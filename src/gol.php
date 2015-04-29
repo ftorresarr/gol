@@ -4,13 +4,14 @@
  * Date: 27/04/15
  * Time: 17:52
  * Esta clase acepta un arreglo con 0s y 1s, cuando se ejecuta el metodo iterate(n) regresa la generacion deseada
- * Ej. new GoL($genData)->iterate()
- *     new GoL($genData)->iterate(10)
- *      Gol->setGenData($genData)->iterate()
+ * Ej. $gol = new GoL($genData)
+	$gol->iterate()
+ *     $gol = new GoL($genData)->iterate(10);
+ *      $gol->setGenData($genData)->iterate()
  */
 
 class GoL {
-    private $_genData, $_genCopy, $_rowCallback;
+    private $_genData, $_genCopy;
 
     /**
      * @param $_inputArr array arreglo, los estados de cada cuadro debe de ser 0 para vivo y 1 para muerto
