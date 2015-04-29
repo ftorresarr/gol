@@ -159,7 +159,7 @@
         gridArrJSON = JSON.stringify(gridArr);
         $.ajax({
             type: "POST",
-            url: "http://fernandotorr.es/gol/golex.php",
+            url: "/gol/golex.php",
             data: {"arrData" : gridArrJSON },
             success: function(data) {        
                 gridArr = JSON.parse(data);
