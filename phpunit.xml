@@ -1,0 +1,10 @@
+<phpunit>
+  <testsuites>
+    <testsuite name="gol">
+      <file>tests/GoLTest.php</file>
+    </testsuite>
+  </testsuites>
+  <php>
+    <includePath>src/</includePath>
+  </php>
+</phpunit>
