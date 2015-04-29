@@ -1,4 +1,5 @@
 # PHP Conway's Game of Life
+PHP5.4+
 
 Little class to compute n generations of a given world
 
@@ -49,6 +50,6 @@ $stillLife = [[0,0,0,0,0],
 $stillLife5 = $gol->setGenData($stillLife)->iterate(5);
 ```
 
-The "example/" folder contains (you guessed it) an example of its usage. It's a little js/html/css frontend that makes a request to golex.php which simply recieves the data, instantiates and returns.  
+The "example/" folder contains (you guessed it) an example of its usage. It's a little js/html/css frontend that makes a request to golex.php which simply recieves the data, instantiates and returns. It has a "PRINT ARRAY" button that can be used to generate valid data for the class (PHP5.4+)  
 
-
+The class comments will be changed to english eventually.
