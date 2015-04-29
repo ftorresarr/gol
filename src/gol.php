@@ -81,14 +81,22 @@ class GoL {
      * @return int numero de vecinos
      * Suma los elementos vivos y muertos que rodean al elemento del cual la informacion se solicita
      */
-
     private function _getNeighboors($row, $col)//row , col
     {
-        return $this->_genData[$row-1][$col-1]+     $this->_genData[$row-1][$col]+      $this->_genData[$row-1][$col+1]+
-                $this->_genData[$row][$col-1]+       /* elemento actual */               $this->_genData[$row][$col+1]+
-                $this->_genData[$row+1][$col-1]+     $this->_genData[$row+1][$col]+      $this->_genData[$row+1][$col+1];
+        return $this->_returnCell($row-1,$col-1)+     $this->_returnCell($row-1,$col)+      $this->_returnCell($row-1,$col+1)+
+                $this->_returnCell($row,$col-1)+       /* elemento actual */                $this->_returnCell($row,$col+1)+
+                $this->_returnCell($row+1,$col-1)+     $this->_returnCell($row+1,$col)+      $this->_returnCell($row+1,$col+1);
     }
 
+    /**
+     * @param $row int
+     * @param $col int
+     * @return int
+     * Permite añadir cualquier numero para el status de vivo, a la vez proteje de indices inválidos
+     */
+    private function _returnCell($row,$col){
+        return (int)(isset($this->_genData[$row][$col]) && (bool)$this->_genData[$row][$col]);
+    }
     /**
      * @param $item array fila a ser procesada
      * @param $key int coordenada de posicion
