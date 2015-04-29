@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <meta charset="utf-8">
+    <title>Hello...</title>
+    <style type="text/css">
+        #mainContent {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: xx-large;
+            font-weight: bold;
+            background-color: #E3F0FB;
+            border-radius: 4px;
+            padding: 10px;
+            text-align: center;
+        }
+        .buttonStyle {
+            border-radius: 4px;
+            border: thin solid #F0E020;
+            padding: 5px;
+            background-color: #F8F094;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            color: #663300;
+            width: 75px;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .buttonStyle:hover {
+            border: thin solid #FFCC00;
+            background-color: #FCF9D6;
+            color: #996633;
+            cursor: pointer;
+        }
+        .buttonStyle:active {
+            border: thin solid #99CC00;
+            background-color: #F5FFD2;
+            color: #669900;
+            cursor: pointer;
+        }
+
+
+        .grid { margin:1em auto; border-collapse:collapse }
+        .grid td {
+            cursor:pointer;
+            width:15px; height:15px;
+            border:1px solid #ccc;
+        }
+        .grid td.selected {
+            background-color:gray;
+        }
+
+    </style>
+</head>
+
+<body>
+<div id="mainContent">
+    <p id="instText">?</p>
+    <div id="gridData">
+        <p><label for="vertical">enter vertical lines pls</label>
+            <input type="text" name="vertical" id="vertical" />
+        </p>
+        <p><label for="horizontal">enter horizontal lines pls</label>
+            <input type="text" name="horizontal" id="horizontal" /></p>
+        <button id="clickButton" class="buttonStyle">click here</button>
+    </div>
+    <button id="stepButton" class="buttonStyle hidden">STEP</button>
+    <button id="clearButton" class="buttonStyle hidden">CLEAR</button>
+    <button id="printArray" class ="buttonStyle hidden">PRINT ARRAY</button>
+</div>
+<script>
+
+    var gridInit = document.getElementById("clickButton");
+    var instText = document.getElementById("instText");
+    var gridData = document.getElementById("gridData");
+    var stepButton = document.getElementById("stepButton");
+    var clearButton = document.getElementById("clearButton");
+    var printButton = document.getElementById("printArray");
+    var gridArr, gridExists, width, height, grid, gridArrB,stopVar;
+    gridInit.addEventListener('click', initGrid, false);
+    stepButton.addEventListener('click', iterate , false);
+    clearButton.addEventListener('click', clear , false);
+    printButton.addEventListener('click', print , false);
+    function clickableGrid( rows, cols, callback ){
+        var i=0;
+        var grid = document.createElement('table');
+        grid.className = 'grid';
+        grid.id = 'grid';
+        for (var r=0;r<rows;++r){
+            var tr = grid.appendChild(document.createElement('tr'));
+            for (var c=0;c<cols;++c){
+                var cell = tr.appendChild(document.createElement('td'));
+                if(gridArr[r][c]===1){
+                    cell.classList.toggle('selected');
+                }
+                cell.addEventListener('click',(function(el,r,c){
+                    return function(){ callback(el,r,c); }
+                })(cell,r,c),false);
+            }
+        }
+        return grid;
+    }
+
+    function clear() {
+        gridArr = createGridArr(width, height);
+        gridArrB = JSON.parse(JSON.stringify(gridArr));
+        newGrid = clickableGrid(width, height, gridCallback);
+        oldGrid = document.getElementById('grid');
+        oldGrid.parentNode.removeChild(oldGrid);
+        document.body.appendChild(newGrid);
+    }
+    var arrText;
+    function print() {
+	if(typeof arrText == 'undefined'){
+		arrText = document.body.appendChild(document.createTextNode(JSON.stringify(gridArr)));
+	} else{
+		arrText.textContent = JSON.stringify(gridArr);
+	}
+    }
+
+    function initGrid() {
+        instText.textContent = "ok, now please click on the squares for initial input!";
+        id     = "canvasElem";
+        width  = +document.getElementById('horizontal').value;
+        height = +document.getElementById('vertical').value;
+        gridArr = createGridArr(width,height);
+        gridArrB = JSON.parse(JSON.stringify(gridArr));;
+        var grid = clickableGrid(height, width, gridCallback);
+        document.body.appendChild(grid);
+        gridExists = true;
+        gridData.classList.toggle('hidden');
+        clearButton.classList.toggle('hidden');
+        stepButton.classList.toggle('hidden');
+	printButton.classList.toggle('hidden');
+    }
+
+    function gridCallback(elem, row, col){
+        elem.classList.toggle('selected');
+        gridArr[row][col] = 1 - gridArr[row][col];
+    }
+
+    function createGridArr(column, rows){
+        var arr = new Array();
+
+        for (i=0;i<rows;i++) {
+            arr[i]=new Array();
+            for (j=0;j<column;j++) {
+                arr[i][j]=0;
+            }
+        }
+        return arr;
+    }
+    function iterate(){
+        gridArrJSON = JSON.stringify(gridArr);
+        $.ajax({
+            type: "POST",
+            url: "http://fernandotorr.es/gol/golex.php",
+            data: {"arrData" : gridArrJSON },
+            success: function(data) {        
+                gridArr = JSON.parse(data);
+                newGrid = clickableGrid(height, width, gridCallback);
+                oldGrid = document.getElementById('grid');
+                oldGrid.parentNode.removeChild(oldGrid);
+                document.body.appendChild(newGrid);
+            }
+        });
+
+    }
+</script>
+
+</body>
+</html>
+
