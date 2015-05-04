@@ -4,9 +4,10 @@
  * Date: 27/04/15
  * Time: 17:52
  * Esta clase acepta un arreglo con 0s y 1s, cuando se ejecuta el metodo iterate(n) regresa la generacion deseada
- * Ej. $gol = new GoL($genData)
-	$gol->iterate()
- *     $gol = new GoL($genData)->iterate(10);
+ * Ej. $gol = new GoL($genData);
+ *	$gol->iterate();
+ *     $gol = new GoL($genData);
+ *     $gol->iterate(10);
  *      $gol->setGenData($genData)->iterate()
  */
 
