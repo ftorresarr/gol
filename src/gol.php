@@ -42,7 +42,7 @@ class GoL {
     }
 
     /**
-     * @param int $numGens numero de generaciones, en entero por default calculamos una generación
+     * @param $numGens int numero de generaciones, en entero por default calculamos una generación
      * @return array resultado de las iteraciones
      */
     public function iterate($numGens = 1){
