@@ -52,7 +52,7 @@ $stillLife5 = $gol->setGenData($stillLife)->iterate(5);
 
 The "example/" folder contains (you guessed it) an example of its usage. It's a little js/html/css frontend that makes a request to golex.php which simply recieves the data, instantiates and returns. It has a "PRINT ARRAY" button that can be used to generate valid data for the class (PHP5.4+)  
 
-Please execute the unit test by executing the following command on the project's main folder
+Please execute the unit tests by running the following command on the project's main folder
 
 ```
 phpunit tests/GoLTest.php
